@@ -20,7 +20,7 @@
     font-size: 26px;
   }
   #search {
-    width: 68%;
+    width: 60%;
     max-width: 350px;
     padding: 10px 8px;
     font-size: 16px;
@@ -29,7 +29,7 @@
     outline: none;
     box-sizing: border-box;
   }
-  #searchBtn {
+  #searchBtn, #showFavBtn {
     padding: 10px 16px;
     font-size: 16px;
     margin-left: 6px;
@@ -40,20 +40,20 @@
     cursor: pointer;
     vertical-align: middle;
   }
-  #searchBtn:active {
+  #searchBtn:active, #showFavBtn:active {
     background-color: #e06666;
   }
 
   .recipe-container {
     margin-top: 26px;
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
 
   .recipe {
-    width: 100%;
+    flex: 1 1 45%;
     max-width: 420px;
     border: 1px solid #ddd;
     border-radius: 11px;
@@ -62,6 +62,8 @@
     box-shadow: 2px 2px 6px #ccc;
     box-sizing: border-box;
     text-align: left;
+    min-width: 280px;
+    position: relative;
   }
 
   .recipe img {
@@ -76,6 +78,22 @@
   .recipe h3 {
     margin: 0 0 8px 0;
     font-size: 20px;
+    color: #ff6f6f;
+    display: inline-block;
+  }
+
+  /* お気に入りスター */
+  .fav-star {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+    user-select: none;
+    transition: color 0.3s;
+  }
+  .fav-star.favorited {
     color: #ff6f6f;
   }
 
@@ -99,6 +117,37 @@
     margin-right: 10px;
     vertical-align: middle;
   }
+
+  .btn-group {
+    margin-top: 10px;
+    margin-bottom: 8px;
+  }
+  .btn-group button {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-right: 6px;
+    border-radius: 7px;
+    border: none;
+    background-color: #ffa1a1;
+    color: white;
+    cursor: pointer;
+  }
+  .btn-group button:active {
+    background-color: #ff7878;
+  }
+
+  @media (max-width: 600px) {
+    .recipe {
+      flex: 1 1 100%;
+      max-width: none;
+      min-width: auto;
+    }
+    #search {
+      width: 100%;
+      max-width: none;
+      margin-bottom: 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -108,14 +157,22 @@
   <div>
     <input type="text" id="search" placeholder="料理名で検索（例：しょうがやき、パスタ）" />
     <button id="searchBtn">検索</button>
+    <button id="showFavBtn" data-show="all">お気に入り表示</button>
   </div>
 
   <div class="recipe-container">
 
     <!-- 肉じゃが -->
-    <div class="recipe" data-title="肉じゃが" data-hiragana="にくじゃが">
+    <div class="recipe" data-title="肉じゃが" data-hiragana="にくじゃが" data-id="recipe1">
+      <span class="fav-star" title="お気に入り切替">&#9734;</span>
       <img src="https://i.ytimg.com/vi/h67vdKlPGzg/hqdefault.jpg" alt="肉じゃが" onclick="toggleIngredients('ingredients1')" />
       <h3>肉じゃが</h3>
+
+      <div class="btn-group">
+        <button onclick="checkAll('ingredients1')">すべてチェック</button>
+        <button onclick="uncheckAll('ingredients1')">すべて解除</button>
+      </div>
+
       <div id="ingredients1" class="ingredients">
         <label><input type="checkbox" /> 豚バラ　250g</label>
         <label><input type="checkbox" /> ジャガイモ　400g</label>
@@ -133,9 +190,16 @@
     </div>
 
     <!-- 豚汁 -->
-    <div class="recipe" data-title="豚汁" data-hiragana="とんじる">
+    <div class="recipe" data-title="豚汁" data-hiragana="とんじる" data-id="recipe2">
+      <span class="fav-star" title="お気に入り切替">&#9734;</span>
       <img src="https://i.ytimg.com/vi/OL8o03u8l2Y/hqdefault.jpg" alt="豚汁" onclick="toggleIngredients('ingredients2')" />
       <h3>豚汁🐷</h3>
+
+      <div class="btn-group">
+        <button onclick="checkAll('ingredients2')">すべてチェック</button>
+        <button onclick="uncheckAll('ingredients2')">すべて解除</button>
+      </div>
+
       <div id="ingredients2" class="ingredients">
         <label><input type="checkbox" /> 豚バラ　280g</label>
         <label><input type="checkbox" /> 塩　1つまみ</label>
@@ -157,9 +221,16 @@
     </div>
 
     <!-- テリヤキ -->
-    <div class="recipe" data-title="テリヤキ" data-hiragana="てりやき">
+    <div class="recipe" data-title="テリヤキ" data-hiragana="てりやき" data-id="recipe3">
+      <span class="fav-star" title="お気に入り切替">&#9734;</span>
       <img src="https://i.ytimg.com/vi/6kHSpe8hRjo/hqdefault.jpg" alt="テリヤキ" onclick="toggleIngredients('ingredients3')" />
       <h3>テリヤキ</h3>
+
+      <div class="btn-group">
+        <button onclick="checkAll('ingredients3')">すべてチェック</button>
+        <button onclick="uncheckAll('ingredients3')">すべて解除</button>
+      </div>
+
       <div id="ingredients3" class="ingredients">
         <label><input type="checkbox" /> 鶏もも肉　300g</label>
         <label><input type="checkbox" /> 塩胡椒　適量</label>
@@ -174,9 +245,16 @@
     </div>
 
     <!-- 納豆パスタ -->
-    <div class="recipe" data-title="納豆パスタ" data-hiragana="なっとうぱすた">
+    <div class="recipe" data-title="納豆パスタ" data-hiragana="なっとうぱすた" data-id="recipe4">
+      <span class="fav-star" title="お気に入り切替">&#9734;</span>
       <img src="https://i.ytimg.com/vi/aEG6nutUySY/hqdefault.jpg" alt="納豆パスタ" onclick="toggleIngredients('ingredients4')" />
       <h3>納豆パスタ</h3>
+
+      <div class="btn-group">
+        <button onclick="checkAll('ingredients4')">すべてチェック</button>
+        <button onclick="uncheckAll('ingredients4')">すべて解除</button>
+      </div>
+
       <div id="ingredients4" class="ingredients">
         <label><input type="checkbox" /> 水　320cc</label>
         <label><input type="checkbox" /> 醤油　小さじ2</label>
@@ -189,9 +267,16 @@
     </div>
 
     <!-- 生姜焼き -->
-    <div class="recipe" data-title="生姜焼き" data-hiragana="しょうがやき">
+    <div class="recipe" data-title="生姜焼き" data-hiragana="しょうがやき" data-id="recipe5">
+      <span class="fav-star" title="お気に入り切替">&#9734;</span>
       <img src="https://i.ytimg.com/vi/WXblKAxLmnE/hqdefault.jpg" alt="生姜焼き" onclick="toggleIngredients('ingredients5')" />
       <h3>生姜焼き</h3>
+
+      <div class="btn-group">
+        <button onclick="checkAll('ingredients5')">すべてチェック</button>
+        <button onclick="uncheckAll('ingredients5')">すべて解除</button>
+      </div>
+
       <div id="ingredients5" class="ingredients">
         <label><input type="checkbox" /> 豚コマ肉　220g</label>
         <label><input type="checkbox" /> 玉ねぎ　1/2個</label>
@@ -210,21 +295,21 @@
   </div>
 
 <script>
-  // カタカナ→ひらがな変換関数（検索語用）
+  // ひらがな変換（カタカナ→ひらがな）
   function katakanaToHiragana(str) {
     return str.replace(/[\u30a1-\u30f6]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
     );
   }
 
-  // 材料の表示切替
+  // 材料表示切替
   function toggleIngredients(id) {
     const el = document.getElementById(id);
     if (!el) return;
     el.style.display = (el.style.display === "block") ? "none" : "block";
   }
 
-  // 検索実行
+  // 検索機能
   function doSearch() {
     const input = document.getElementById('search').value.toLowerCase();
     const keyword = katakanaToHiragana(input);
@@ -233,29 +318,145 @@
     recipes.forEach(recipe => {
       const title = recipe.getAttribute('data-title').toLowerCase();
       const hiragana = recipe.getAttribute('data-hiragana').toLowerCase();
-      const titleHira = katakanaToHiragana(title);
 
-      if (
-        title.includes(keyword) ||
-        hiragana.includes(keyword) ||
-        titleHira.includes(keyword)
-      ) {
+      if (title.includes(keyword) || hiragana.includes(keyword)) {
         recipe.style.display = 'block';
       } else {
         recipe.style.display = 'none';
       }
     });
+
+    // 検索後はお気に入り表示OFFに
+    document.getElementById('showFavBtn').setAttribute('data-show', 'all');
+    document.getElementById('showFavBtn').textContent = 'お気に入り表示';
   }
 
-  // ボタン押下で検索
   document.getElementById('searchBtn').addEventListener('click', doSearch);
 
-  // エンターキーでも検索実行
-  document.getElementById('search').addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      doSearch();
+  // チェックボックス一括操作
+  function checkAll(ingredientsId) {
+    const container = document.getElementById(ingredientsId);
+    if (!container) return;
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+    saveChecks(ingredientsId);
+  }
+  function uncheckAll(ingredientsId) {
+    const container = document.getElementById(ingredientsId);
+    if (!container) return;
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    saveChecks(ingredientsId);
+  }
+
+  // チェック状態の保存・復元（ローカルストレージ）
+  function saveChecks(ingredientsId) {
+    const container = document.getElementById(ingredientsId);
+    if (!container) return;
+    const checks = [];
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      checks.push(cb.checked ? 1 : 0);
+    });
+    localStorage.setItem('checks_' + ingredientsId, JSON.stringify(checks));
+  }
+  function loadChecks(ingredientsId) {
+    const container = document.getElementById(ingredientsId);
+    if (!container) return;
+    const saved = localStorage.getItem('checks_' + ingredientsId);
+    if (!saved) return;
+    try {
+      const checks = JSON.parse(saved);
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach((cb, i) => {
+        cb.checked = (checks[i] === 1);
+      });
+    } catch {
+      // parse error or invalid
     }
-  });
+  }
+
+  // 全レシピのチェック復元
+  function loadAllChecks() {
+    document.querySelectorAll('.ingredients').forEach(ul => {
+      loadChecks(ul.id);
+      // チェック変更時は保存
+      ul.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          saveChecks(ul.id);
+        });
+      });
+    });
+  }
+
+  // お気に入り切替
+  function toggleFavorite(recipeEl, id) {
+    const favKey = 'fav_' + id;
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (favs.includes(id)) {
+      // お気に入り解除
+      favs = favs.filter(x => x !== id);
+      recipeEl.querySelector('.fav-star').classList.remove('favorited');
+      recipeEl.querySelector('.fav-star').textContent = '☆';
+    } else {
+      // お気に入り追加
+      favs.push(id);
+      recipeEl.querySelector('.fav-star').classList.add('favorited');
+      recipeEl.querySelector('.fav-star').textContent = '★';
+    }
+    localStorage.setItem('favorites', JSON.stringify(favs));
+  }
+
+  // お気に入りアイコン初期状態設定
+  function loadFavorites() {
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+    document.querySelectorAll('.recipe').forEach(recipe => {
+      const id = recipe.getAttribute('data-id');
+      const star = recipe.querySelector('.fav-star');
+      if (favs.includes(id)) {
+        star.classList.add('favorited');
+        star.textContent = '★';
+      } else {
+        star.classList.remove('favorited');
+        star.textContent = '☆';
+      }
+
+      // クリックイベント付与
+      star.onclick = () => toggleFavorite(recipe, id);
+    });
+  }
+
+  // お気に入りだけ表示切替
+  function toggleShowFavorites() {
+    const btn = document.getElementById('showFavBtn');
+    let show = btn.getAttribute('data-show');
+    const recipes = document.querySelectorAll('.recipe');
+
+    if (show === 'all') {
+      // お気に入りだけ表示
+      let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+      recipes.forEach(recipe => {
+        if (favs.includes(recipe.getAttribute('data-id'))) {
+          recipe.style.display = 'block';
+        } else {
+          recipe.style.display = 'none';
+        }
+      });
+      btn.setAttribute('data-show', 'fav');
+      btn.textContent = '全レシピ表示';
+    } else {
+      // 全レシピ表示
+      recipes.forEach(recipe => {
+        recipe.style.display = 'block';
+      });
+      btn.setAttribute('data-show', 'all');
+      btn.textContent = 'お気に入り表示';
+    }
+  }
+  document.getElementById('showFavBtn').addEventListener('click', toggleShowFavorites);
+
+  // ページロード時の初期化
+  window.onload = () => {
+    loadAllChecks();
+    loadFavorites();
+  };
 </script>
 
 </body>
