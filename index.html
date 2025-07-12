@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>かんたんレシピ</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      background-color: #fff8f0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff8c8c;
+    }
+
+    .recipe-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .recipe {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px;
+      width: 200px;
+      box-shadow: 2px 2px 5px #ccc;
+    }
+
+    .recipe img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .ingredients {
+      display: none;
+      margin-top: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍳 なな。のお得意料理</h1>
+
+  <div class="recipe-container">
+    <!-- レシピ1 -->
+    <div class="recipe">
+      <img src="https://i.ytimg.com/vi/h67vdKlPGzg/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC38lSR7ejsH21Yfl8OUVczViridw" alt="肉じゃが" onclick="toggleIngredients('ingredients1')">
+      <h3>至高の無水肉じゃが（2～3人前）</h3>
+      <ul id="ingredients1" class="ingredients">
+        <li>豚バラ　250g</li>
+        <li>ジャガイモ　400g</li>
+        <li>人参　300g</li>
+        <li>玉ねぎ　250g</li>
+        <li>白滝　200g</li>
+        <li>生姜　15g</li>
+	<li>ゴマ油　大さじ1半</li>
+	<li>塩胡椒　適量</li>
+	<li>醤油　大さじ４</li>
+	<li>酒　大さじ６</li>
+	<li>白だし　大さじ2</li>
+	<li>砂糖　大さじ2</li>
+      </ul>
+    </div>
+
+    <!-- レシピ2 -->
+    <div class="recipe">
+      <img src="https://www.kurashiru.com/assets/top/recipes/2.jpg" alt="親子丼" onclick="toggleIngredients('ingredients2')">
+      <h3>ふわとろ親子丼</h3>
+      <ul id="ingredients2" class="ingredients">
+        <li>鶏もも肉 150g</li>
+        <li>玉ねぎ 1/2個</li>
+        <li>卵 2個</li>
+        <li>めんつゆ 大さじ2</li>
+        <li>水 100ml</li>
+        <li>ごはん 茶碗1杯</li>
+      </ul>
+    </div>
+
+    <!-- レシピ3 -->
+    <div class="recipe">
+      <img src="https://www.kurashiru.com/assets/top/recipes/3.jpg" alt="サラダ" onclick="toggleIngredients('ingredients3')">
+      <h3>ツナコーンサラダ</h3>
+      <ul id="ingredients3" class="ingredients">
+        <li>レタス 適量</li>
+        <li>ツナ缶 1缶</li>
+        <li>コーン 大さじ3</li>
+        <li>マヨネーズ 大さじ1</li>
+        <li>塩こしょう 少々</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleIngredients(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === "block") ? "none" : "block";
+    }
+  </script>
+
+</body>
+</html>
