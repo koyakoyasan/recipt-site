@@ -3,45 +3,65 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>かんたんレシピ</title>
+<title>な。のやさしいレシピ</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=M PLUS Rounded 1c&display=swap');
+
   body {
-    font-family: "Hiragino Kaku Gothic ProN", sans-serif, sans-serif;
-    background-color: #fff8f0;
+    font-family: 'M PLUS Rounded 1c', 'Hiragino Kaku Gothic ProN', sans-serif;
+    background-color: #fff5f7;
     margin: 0;
-    padding: 12px;
+    padding: 14px 12px;
+    color: #444;
     text-align: center;
-    font-size: 16px;
-    color: #333;
   }
+
   h1 {
-    color: #ff8c8c;
-    margin-bottom: 16px;
-    font-size: 26px;
+    color: #e75480;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 3px #f9d6e6;
   }
+
+  #search, #searchBtn, #showFavBtn {
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 20px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+  }
+
   #search {
     width: 60%;
-    max-width: 350px;
-    padding: 10px 8px;
-    font-size: 16px;
-    border: 2px solid #ff8c8c;
-    border-radius: 7px;
-    outline: none;
+    max-width: 340px;
+    padding: 10px 16px;
+    border: 2px solid #e75480;
+    box-shadow: inset 0 0 5px #f9d6e6;
     box-sizing: border-box;
   }
+  #search:focus {
+    box-shadow: 0 0 8px #e75480;
+    border-color: #e75480;
+  }
+
   #searchBtn, #showFavBtn {
-    padding: 10px 16px;
-    font-size: 16px;
-    margin-left: 6px;
-    border-radius: 7px;
+    padding: 10px 20px;
+    margin-left: 8px;
     border: none;
-    background-color: #ff8c8c;
+    background-color: #e75480;
     color: white;
     cursor: pointer;
-    vertical-align: middle;
+    box-shadow: 0 4px 10px #f9d6e6;
+    font-weight: 600;
+    user-select: none;
+  }
+  #searchBtn:hover, #showFavBtn:hover {
+    background-color: #d2446f;
+    box-shadow: 0 6px 12px #f9d6e6;
   }
   #searchBtn:active, #showFavBtn:active {
-    background-color: #e06666;
+    background-color: #b73660;
   }
 
   .recipe-container {
@@ -49,52 +69,67 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
   }
 
   .recipe {
     flex: 1 1 45%;
-    max-width: 420px;
-    border: 1px solid #ddd;
-    border-radius: 11px;
-    background: #fff;
+    max-width: 400px;
+    background: #fff0f6;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px #f9d6e6;
     padding: 14px;
-    box-shadow: 2px 2px 6px #ccc;
     box-sizing: border-box;
     text-align: left;
     min-width: 280px;
     position: relative;
+    transition: transform 0.3s ease;
+  }
+  .recipe:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px #f9b8cc;
   }
 
   .recipe img {
     width: 100%;
-    border-radius: 11px;
+    border-radius: 20px;
     cursor: pointer;
     display: block;
     margin-bottom: 10px;
     user-select: none;
+    box-shadow: 0 2px 8px #f9d6e6;
+    transition: box-shadow 0.3s ease;
+  }
+  .recipe img:hover {
+    box-shadow: 0 4px 16px #f9b8cc;
   }
 
   .recipe h3 {
-    margin: 0 0 8px 0;
-    font-size: 20px;
-    color: #ff6f6f;
+    margin: 0 0 10px 0;
+    font-size: 22px;
+    color: #e75480;
     display: inline-block;
+    font-weight: 700;
   }
 
   /* お気に入りスター */
   .fav-star {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 24px;
+    top: 14px;
+    right: 14px;
+    font-size: 26px;
     cursor: pointer;
-    color: #ccc;
+    color: #f4a1b7;
     user-select: none;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
   }
   .fav-star.favorited {
-    color: #ff6f6f;
+    color: #e75480;
+    text-shadow: 0 0 6px #fba2b8;
+  }
+  .fav-star:hover {
+    transform: scale(1.3);
+    color: #ff6296;
   }
 
   .ingredients {
@@ -103,19 +138,27 @@
     overflow-y: auto;
     padding-right: 10px;
     margin-top: 6px;
+    border-top: 1px solid #f4a1b7;
   }
 
   .ingredients label {
     display: block;
-    font-size: 15px;
-    padding: 7px 4px;
+    font-size: 16px;
+    padding: 8px 6px;
     cursor: pointer;
     user-select: none;
+    color: #666;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+  }
+  .ingredients label:hover {
+    background-color: #ffd5df;
   }
   .ingredients label input[type="checkbox"] {
-    transform: scale(1.1);
-    margin-right: 10px;
+    transform: scale(1.2);
+    margin-right: 12px;
     vertical-align: middle;
+    cursor: pointer;
   }
 
   .btn-group {
@@ -123,30 +166,33 @@
     margin-bottom: 8px;
   }
   .btn-group button {
-    font-size: 14px;
-    padding: 6px 10px;
-    margin-right: 6px;
-    border-radius: 7px;
+    font-size: 15px;
+    padding: 7px 14px;
+    margin-right: 8px;
+    border-radius: 20px;
     border: none;
-    background-color: #ffa1a1;
+    background-color: #f99bbd;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .btn-group button:hover {
+    background-color: #e56f97;
   }
   .btn-group button:active {
-    background-color: #ff7878;
+    background-color: #d0537c;
   }
 
-  /* ここからメディアクエリ修正 */
   @media (max-width: 600px) {
     .recipe {
-      flex: 1 1 48%; /* 2列表示用に50%弱に */
+      flex: 1 1 100%;
       max-width: none;
       min-width: auto;
     }
     #search {
       width: 100%;
       max-width: none;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
   }
 </style>
@@ -378,7 +424,6 @@
   function loadAllChecks() {
     document.querySelectorAll('.ingredients').forEach(ul => {
       loadChecks(ul.id);
-      // チェック変更時は保存
       ul.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         cb.addEventListener('change', () => {
           saveChecks(ul.id);
@@ -418,9 +463,10 @@
         star.classList.remove('favorited');
         star.textContent = '☆';
       }
-
-      // クリックイベント付与
-      star.onclick = () => toggleFavorite(recipe, id);
+      star.onclick = (e) => {
+        e.stopPropagation();
+        toggleFavorite(recipe, id);
+      };
     });
   }
 
@@ -431,7 +477,6 @@
     const recipes = document.querySelectorAll('.recipe');
 
     if (show === 'all') {
-      // お気に入りだけ表示
       let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
       recipes.forEach(recipe => {
         if (favs.includes(recipe.getAttribute('data-id'))) {
@@ -443,7 +488,6 @@
       btn.setAttribute('data-show', 'fav');
       btn.textContent = '全レシピ表示';
     } else {
-      // 全レシピ表示
       recipes.forEach(recipe => {
         recipe.style.display = 'block';
       });
@@ -451,9 +495,10 @@
       btn.textContent = 'お気に入り表示';
     }
   }
+
   document.getElementById('showFavBtn').addEventListener('click', toggleShowFavorites);
 
-  // ページロード時の初期化
+  // 初期化
   window.onload = () => {
     loadAllChecks();
     loadFavorites();
