@@ -3,65 +3,54 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>な。のやさしいレシピ</title>
+<title>かんたんレシピ</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=M PLUS Rounded 1c&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
 
   body {
-    font-family: 'M PLUS Rounded 1c', 'Hiragino Kaku Gothic ProN', sans-serif;
-    background-color: #fff5f7;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background-color: #fff0f5;
     margin: 0;
-    padding: 14px 12px;
-    color: #444;
+    padding: 12px;
     text-align: center;
-  }
-
-  h1 {
-    color: #e75480;
-    font-weight: 700;
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-shadow: 0 1px 3px #f9d6e6;
-  }
-
-  #search, #searchBtn, #showFavBtn {
-    font-family: inherit;
     font-size: 16px;
-    border-radius: 20px;
-    outline: none;
-    transition: box-shadow 0.3s ease;
+    color: #555555;
   }
-
+  h1 {
+    color: #e56e94;
+    margin-bottom: 16px;
+    font-size: 26px;
+  }
   #search {
     width: 60%;
-    max-width: 340px;
-    padding: 10px 16px;
-    border: 2px solid #e75480;
-    box-shadow: inset 0 0 5px #f9d6e6;
+    max-width: 350px;
+    padding: 10px 8px;
+    font-size: 16px;
+    border: 2px solid #e56e94;
+    border-radius: 12px;
+    outline: none;
     box-sizing: border-box;
+    transition: border-color 0.3s;
   }
   #search:focus {
-    box-shadow: 0 0 8px #e75480;
-    border-color: #e75480;
+    border-color: #c0406d;
   }
-
   #searchBtn, #showFavBtn {
-    padding: 10px 20px;
-    margin-left: 8px;
+    padding: 10px 16px;
+    font-size: 16px;
+    margin-left: 6px;
+    border-radius: 12px;
     border: none;
-    background-color: #e75480;
+    background-color: #e56e94;
     color: white;
     cursor: pointer;
-    box-shadow: 0 4px 10px #f9d6e6;
-    font-weight: 600;
-    user-select: none;
-  }
-  #searchBtn:hover, #showFavBtn:hover {
-    background-color: #d2446f;
-    box-shadow: 0 6px 12px #f9d6e6;
+    vertical-align: middle;
+    box-shadow: 0 3px 6px #f9c5d1aa;
+    transition: background-color 0.3s, box-shadow 0.3s;
   }
   #searchBtn:active, #showFavBtn:active {
-    background-color: #b73660;
+    background-color: #c0406d;
+    box-shadow: 0 2px 4px #b8405caa;
   }
 
   .recipe-container {
@@ -69,96 +58,85 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 16px;
+    gap: 14px;
   }
 
   .recipe {
-    flex: 1 1 45%;
-    max-width: 400px;
-    background: #fff0f6;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px #f9d6e6;
-    padding: 14px;
+    flex: 1 1 calc(50% - 14px);
+    max-width: 320px;
+    border: 1px solid #f1c4cc;
+    border-radius: 16px;
+    background: #fff;
+    padding: 14px 18px 20px 18px;
+    box-shadow: 0 3px 6px #f8c7d4cc;
     box-sizing: border-box;
     text-align: left;
-    min-width: 280px;
     position: relative;
-    transition: transform 0.3s ease;
+    cursor: default;
+    transition: box-shadow 0.3s;
   }
   .recipe:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 18px #f9b8cc;
+    box-shadow: 0 6px 14px #f7a1b3cc;
   }
 
   .recipe img {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 16px;
     cursor: pointer;
     display: block;
     margin-bottom: 10px;
     user-select: none;
-    box-shadow: 0 2px 8px #f9d6e6;
-    transition: box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
   }
   .recipe img:hover {
-    box-shadow: 0 4px 16px #f9b8cc;
+    transform: scale(1.03);
   }
 
   .recipe h3 {
-    margin: 0 0 10px 0;
-    font-size: 22px;
-    color: #e75480;
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: #d15375;
     display: inline-block;
-    font-weight: 700;
   }
 
   /* お気に入りスター */
   .fav-star {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     font-size: 26px;
     cursor: pointer;
-    color: #f4a1b7;
+    color: #d9b6c3;
     user-select: none;
     transition: color 0.3s, transform 0.3s;
   }
   .fav-star.favorited {
-    color: #e75480;
-    text-shadow: 0 0 6px #fba2b8;
+    color: #d15375;
   }
   .fav-star:hover {
     transform: scale(1.3);
-    color: #ff6296;
   }
 
   .ingredients {
     display: none;
-    max-height: 260px;
+    max-height: 240px;
     overflow-y: auto;
     padding-right: 10px;
     margin-top: 6px;
-    border-top: 1px solid #f4a1b7;
+    font-size: 15px;
+    color: #666;
   }
 
   .ingredients label {
     display: block;
-    font-size: 16px;
-    padding: 8px 6px;
+    padding: 7px 4px;
     cursor: pointer;
     user-select: none;
-    color: #666;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-  }
-  .ingredients label:hover {
-    background-color: #ffd5df;
   }
   .ingredients label input[type="checkbox"] {
-    transform: scale(1.2);
-    margin-right: 12px;
+    transform: scale(1.1);
+    margin-right: 10px;
     vertical-align: middle;
-    cursor: pointer;
   }
 
   .btn-group {
@@ -166,33 +144,48 @@
     margin-bottom: 8px;
   }
   .btn-group button {
-    font-size: 15px;
-    padding: 7px 14px;
-    margin-right: 8px;
-    border-radius: 20px;
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-right: 6px;
+    border-radius: 12px;
     border: none;
-    background-color: #f99bbd;
+    background-color: #f7a3b3;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .btn-group button:hover {
-    background-color: #e56f97;
+    box-shadow: 0 2px 6px #f7a3b3aa;
+    transition: background-color 0.3s, box-shadow 0.3s;
   }
   .btn-group button:active {
-    background-color: #d0537c;
+    background-color: #d9536e;
+    box-shadow: 0 1px 3px #b84557aa;
   }
 
   @media (max-width: 600px) {
     .recipe {
-      flex: 1 1 100%;
-      max-width: none;
-      min-width: auto;
+      flex: 1 1 calc(50% - 14px);
+      max-width: 160px;
+      padding: 10px 12px 16px 12px;
+    }
+    .recipe img {
+      border-radius: 12px;
+      margin-bottom: 8px;
     }
     #search {
       width: 100%;
       max-width: none;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+    }
+    #searchBtn, #showFavBtn {
+      margin-left: 0;
+      margin-top: 6px;
+      width: 48%;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    /* 検索とお気に入りボタンを縦並びに */
+    div > #search, div > #searchBtn, div > #showFavBtn {
+      display: inline-block;
+      vertical-align: middle;
     }
   }
 </style>
@@ -424,6 +417,7 @@
   function loadAllChecks() {
     document.querySelectorAll('.ingredients').forEach(ul => {
       loadChecks(ul.id);
+      // チェック変更時は保存
       ul.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         cb.addEventListener('change', () => {
           saveChecks(ul.id);
@@ -463,10 +457,9 @@
         star.classList.remove('favorited');
         star.textContent = '☆';
       }
-      star.onclick = (e) => {
-        e.stopPropagation();
-        toggleFavorite(recipe, id);
-      };
+
+      // クリックイベント付与
+      star.onclick = () => toggleFavorite(recipe, id);
     });
   }
 
@@ -477,6 +470,7 @@
     const recipes = document.querySelectorAll('.recipe');
 
     if (show === 'all') {
+      // お気に入りだけ表示
       let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
       recipes.forEach(recipe => {
         if (favs.includes(recipe.getAttribute('data-id'))) {
@@ -488,6 +482,7 @@
       btn.setAttribute('data-show', 'fav');
       btn.textContent = '全レシピ表示';
     } else {
+      // 全レシピ表示
       recipes.forEach(recipe => {
         recipe.style.display = 'block';
       });
@@ -495,10 +490,9 @@
       btn.textContent = 'お気に入り表示';
     }
   }
-
   document.getElementById('showFavBtn').addEventListener('click', toggleShowFavorites);
 
-  // 初期化
+  // ページロード時の初期化
   window.onload = () => {
     loadAllChecks();
     loadFavorites();
