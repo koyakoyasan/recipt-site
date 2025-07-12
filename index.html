@@ -136,9 +136,10 @@
     background-color: #ff7878;
   }
 
+  /* ここからメディアクエリ修正 */
   @media (max-width: 600px) {
     .recipe {
-      flex: 1 1 100%;
+      flex: 1 1 48%; /* 2列表示用に50%弱に */
       max-width: none;
       min-width: auto;
     }
